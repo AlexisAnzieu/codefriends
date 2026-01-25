@@ -1,3 +1,12 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-team-red: #dc2626;
+  --color-team-blue: #2563eb;
+  --color-team-neutral: #a3a3a3;
+  --color-team-black: #171717;
+}
+
 :root {
   --font-mono: 'Roboto Mono', monospace;
 }

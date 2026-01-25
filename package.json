@@ -11,6 +11,7 @@
     "generate:importmap": "cross-env NODE_OPTIONS=--no-deprecation payload generate:importmap",
     "generate:types": "cross-env NODE_OPTIONS=--no-deprecation payload generate:types",
     "lint": "cross-env NODE_OPTIONS=--no-deprecation next lint",
+    "lint:fix": "cross-env NODE_OPTIONS=--no-deprecation next lint --fix",
     "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
     "start": "cross-env NODE_OPTIONS=--no-deprecation next start",
     "test": "pnpm run test:int && pnpm run test:e2e",
@@ -18,8 +19,10 @@
     "test:int": "cross-env NODE_OPTIONS=--no-deprecation vitest run --config ./vitest.config.mts"
   },
   "dependencies": {
+    "@payloadcms/db-mongodb": "3.73.0",
     "@payloadcms/next": "3.73.0",
     "@payloadcms/richtext-lexical": "3.73.0",
+    "@payloadcms/storage-s3": "^3.73.0",
     "@payloadcms/ui": "3.73.0",
     "cross-env": "^7.0.3",
     "dotenv": "16.4.7",
@@ -28,11 +31,12 @@
     "payload": "3.73.0",
     "react": "19.2.1",
     "react-dom": "19.2.1",
-    "sharp": "0.34.2",
-    "@payloadcms/db-mongodb": "3.73.0"
+    "sharp": "0.34.2"
   },
   "devDependencies": {
+    "@eslint/eslintrc": "^3.3.3",
     "@playwright/test": "1.56.1",
+    "@tailwindcss/postcss": "^4.1.18",
     "@testing-library/react": "16.3.0",
     "@types/node": "^22.5.4",
     "@types/react": "19.2.1",
@@ -43,7 +47,9 @@
     "jsdom": "26.1.0",
     "playwright": "1.56.1",
     "playwright-core": "1.56.1",
+    "postcss": "^8.5.6",
     "prettier": "^3.4.2",
+    "tailwindcss": "^4.1.18",
     "typescript": "5.7.3",
     "vite-tsconfig-paths": "5.1.4",
     "vitest": "3.2.3"
