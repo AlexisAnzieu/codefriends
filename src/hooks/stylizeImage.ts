@@ -45,7 +45,7 @@ export const stylizeMediaHook: CollectionBeforeChangeHook = async ({ data, req, 
 
     // Generate stylized image using Gemini 2.5 Flash Image model
     const response = await client.models.generateContent({
-      model: 'gemini-.5-flash-image',
+      model: 'gemini-2.5-flash-image',
       contents: [
         {
           role: 'user',
