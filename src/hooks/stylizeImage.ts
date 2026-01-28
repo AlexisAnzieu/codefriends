@@ -1,4 +1,4 @@
-import { GoogleGenAI, type Modality } from '@google/genai'
+import { GoogleGenAI, Modality } from '@google/genai'
 import type { CollectionBeforeChangeHook } from 'payload'
 
 const STYLIZE_PROMPT = `Transform this photo into a codename pictures-inspired cartoon portrait. 
@@ -63,7 +63,7 @@ export const stylizeMediaHook: CollectionBeforeChangeHook = async ({ data, req, 
         },
       ],
       config: {
-        responseModalities: ['Text', 'Image'] as Modality[],
+        responseModalities: [Modality.TEXT, Modality.IMAGE],
       },
     })
 
