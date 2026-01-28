@@ -19,6 +19,7 @@
     "test:int": "cross-env NODE_OPTIONS=--no-deprecation vitest run --config ./vitest.config.mts"
   },
   "dependencies": {
+    "@google/genai": "^1.38.0",
     "@payloadcms/db-mongodb": "3.73.0",
     "@payloadcms/next": "3.73.0",
     "@payloadcms/richtext-lexical": "3.73.0",
