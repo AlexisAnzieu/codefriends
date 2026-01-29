@@ -5,7 +5,7 @@ const STYLIZE_PROMPT = `Transform this photo into a codename pictures-inspired c
 Requirements:
 - Crop and reframe to show ONLY head and shoulders, filling the entire frame with no margins or blank space
 - The portrait must occupy 100% of the image canvas, edge to edge
-- High-fidelity cartoon render with black and white aesthetic
+- Low quality cartoon render with black and white aesthetic
 - Pure white background behind the subject
 - If text, remove any text from the image
 - Stylized expressive eyes while keeping highly recognizable facial features
