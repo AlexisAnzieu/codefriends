@@ -1,5 +1,6 @@
 import { GoogleGenAI, Modality } from '@google/genai'
 import type { CollectionBeforeChangeHook } from 'payload'
+import sharp from 'sharp'
 
 const STYLIZE_PROMPT = `Transform this photo into a codename pictures-inspired cartoon portrait. 
 Requirements:
@@ -10,6 +11,9 @@ Requirements:
 - If text, remove any text from the image
 - Stylized expressive eyes while keeping highly recognizable facial features
 - Square 1:1 aspect ratio output`
+
+// Max dimension for input images to reduce API costs
+const MAX_INPUT_SIZE = 512
 
 export const stylizeMediaHook: CollectionBeforeChangeHook = async ({ data, req, operation }) => {
   // Only process new uploads
@@ -37,8 +41,14 @@ export const stylizeMediaHook: CollectionBeforeChangeHook = async ({ data, req, 
       throw new Error('GOOGLE_GENERATIVE_AI_API_KEY is not set')
     }
 
-    // Convert buffer to base64
-    const base64Image = file.data.toString('base64')
+    // Resize image to reduce API costs (max 512x512)
+    const resizedBuffer = await sharp(file.data)
+      .resize(MAX_INPUT_SIZE, MAX_INPUT_SIZE, { fit: 'inside', withoutEnlargement: true })
+      .jpeg({ quality: 80 })
+      .toBuffer()
+
+    // Convert resized buffer to base64
+    const base64Image = resizedBuffer.toString('base64')
 
     // Initialize Google GenAI client
     const client = new GoogleGenAI({ apiKey })
@@ -52,7 +62,7 @@ export const stylizeMediaHook: CollectionBeforeChangeHook = async ({ data, req, 
           parts: [
             {
               inlineData: {
-                mimeType: mimeType,
+                mimeType: 'image/jpeg',
                 data: base64Image,
               },
             },
