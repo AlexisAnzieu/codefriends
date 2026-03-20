@@ -31,41 +31,20 @@ function calculateTeamCounts(totalCards: number): Record<Team, number> {
 }
 
 /**
- * Calculates optimal grid dimensions for a given card count
- * Max grid is 4x5 (20 cards)
+ * Calculates optimal grid dimensions for a given card count.
+ * Picks a width (max 5) and computes the height to fit all cards.
  */
 export function calculateGridDimensions(cardCount: number): {
   width: number
   height: number
 } {
-  const count = Math.min(cardCount, 20)
-
-  // Try to find the most square-ish rectangle
-  const possibleDimensions = [
-    { width: 5, height: 4 }, // 20
-    { width: 5, height: 3 }, // 15
-    { width: 4, height: 4 }, // 16
-    { width: 4, height: 3 }, // 12
-    { width: 5, height: 2 }, // 10
-    { width: 4, height: 2 }, // 8
-    { width: 3, height: 3 }, // 9
-    { width: 3, height: 2 }, // 6
-    { width: 2, height: 2 }, // 4
-  ]
-
-  // Find smallest grid that fits all cards
-  for (const dim of possibleDimensions) {
-    if (dim.width * dim.height >= count) {
-      // Adjust to exact fit if possible
-      if (count <= dim.width * (dim.height - 1) && dim.height > 1) {
-        continue
-      }
-      return dim
-    }
+  if (cardCount <= 4) {
+    return { width: Math.min(cardCount, 2), height: Math.ceil(cardCount / 2) }
   }
 
-  // Fallback for very small counts
-  return { width: Math.min(count, 5), height: Math.ceil(count / 5) }
+  const width = Math.min(cardCount, 5)
+  const height = Math.ceil(cardCount / width)
+  return { width, height }
 }
 
 /**
@@ -79,10 +58,6 @@ export function createGridConfig(cardIds: string[]): {
 } {
   if (cardIds.length < 4) {
     throw new Error('Minimum 4 cards required to create a game')
-  }
-
-  if (cardIds.length > 20) {
-    throw new Error('Maximum 20 cards allowed')
   }
 
   const { width, height } = calculateGridDimensions(cardIds.length)

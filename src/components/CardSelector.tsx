@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
 import type { Card, Media } from '@/payload-types'
+import { ExportCards } from './ExportCards'
 
 interface CardSelectorProps {
   cards: Card[]
@@ -16,21 +17,19 @@ export function CardSelector({ cards }: CardSelectorProps) {
   const [gameName, setGameName] = useState('')
   const [isCreating, setIsCreating] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [showExport, setShowExport] = useState(false)
 
   const toggleCard = (cardId: string) => {
     setSelectedCards((prev) => {
       if (prev.includes(cardId)) {
         return prev.filter((id) => id !== cardId)
       }
-      if (prev.length >= 20) {
-        return prev
-      }
       return [...prev, cardId]
     })
   }
 
   const selectAll = () => {
-    setSelectedCards(cards.slice(0, 20).map((c) => c.id))
+    setSelectedCards(cards.map((c) => c.id))
   }
 
   const deselectAll = () => {
@@ -93,7 +92,9 @@ export function CardSelector({ cards }: CardSelectorProps) {
 
         {/* Selection controls */}
         <div className="flex items-center gap-4 mb-6">
-          <span className="text-white">Selected: {selectedCards.length}/20</span>
+          <span className="text-white">
+            Selected: {selectedCards.length}/{cards.length}
+          </span>
           <button
             onClick={selectAll}
             className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
@@ -112,6 +113,13 @@ export function CardSelector({ cards }: CardSelectorProps) {
             className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isCreating ? 'Creating...' : 'Create Game'}
+          </button>
+          <button
+            onClick={() => setShowExport(true)}
+            disabled={cards.length === 0}
+            className="px-6 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            Export All
           </button>
         </div>
 
@@ -173,6 +181,8 @@ export function CardSelector({ cards }: CardSelectorProps) {
             )
           })}
         </div>
+
+        {showExport && <ExportCards cards={cards} onClose={() => setShowExport(false)} />}
 
         {cards.length === 0 && (
           <div className="text-center text-gray-500 py-12">

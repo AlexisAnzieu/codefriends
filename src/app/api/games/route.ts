@@ -12,10 +12,6 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'At least 4 card IDs are required' }, { status: 400 })
     }
 
-    if (cardIds.length > 20) {
-      return NextResponse.json({ error: 'Maximum 20 cards allowed' }, { status: 400 })
-    }
-
     const payloadConfig = await config
     const payload = await getPayload({ config: payloadConfig })
 

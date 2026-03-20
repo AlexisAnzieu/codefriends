@@ -49,6 +49,167 @@ img {
   display: block;
 }
 
+/* Export cards pages */
+.export-page {
+  max-width: 900px;
+  margin: 0 auto 32px;
+  aspect-ratio: 8.5 / 11;
+}
+
+.export-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 16px;
+  height: 100%;
+}
+
+.export-card {
+  border: 2px solid #374151;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #1f2937;
+  break-inside: avoid;
+  display: flex;
+  flex-direction: column;
+}
+
+.export-card-image {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  background: #111827;
+}
+
+.export-card-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  color: #6b7280;
+  font-weight: bold;
+}
+
+.export-card-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  background: #111827;
+  flex-shrink: 0;
+}
+
+.export-card-number {
+  font-weight: 700;
+  color: #9ca3af;
+  font-size: 0.9rem;
+}
+
+.export-card-name {
+  font-weight: 600;
+  color: #fff;
+  font-size: 0.95rem;
+}
+
+/* Print styles */
+@page {
+  size: letter portrait;
+  margin: 0;
+}
+
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+    margin: 0;
+    padding: 0;
+  }
+
+  body > * {
+    display: none !important;
+  }
+
+  .export-overlay {
+    display: block !important;
+    position: static !important;
+    overflow: visible !important;
+    height: auto !important;
+    inset: auto !important;
+  }
+
+  .print\:hidden {
+    display: none !important;
+  }
+
+  .export-print-area {
+    padding: 0;
+  }
+
+  .export-page {
+    page-break-after: always;
+    break-after: page;
+    margin: 0;
+    padding: 8mm;
+    width: 215.9mm;
+    height: 279.4mm;
+    box-sizing: border-box;
+    aspect-ratio: auto;
+  }
+
+  .export-page:last-child {
+    page-break-after: avoid;
+  }
+
+  .export-grid {
+    gap: 6px;
+    height: 100%;
+  }
+
+  .export-card {
+    border: 1px solid #ccc;
+    background: white;
+    border-radius: 8px;
+  }
+
+  .export-card-image {
+    aspect-ratio: auto;
+    flex: 1;
+    min-height: 0;
+  }
+
+  .export-card-image img {
+    object-fit: cover;
+  }
+
+  .export-card {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .export-card-image {
+    background: #f3f4f6;
+  }
+
+  .export-card-placeholder {
+    color: #9ca3af;
+  }
+
+  .export-card-info {
+    background: #f9fafb;
+  }
+
+  .export-card-number {
+    color: #374151;
+  }
+
+  .export-card-name {
+    color: #111827;
+  }
+}
+
 h1 {
   margin: 40px 0;
   font-size: 64px;
